@@ -27,6 +27,7 @@ export default class App extends React.Component {
     // sendTasks posts to 'todo' from state of inputTask then sets the state of inputTask to empty "". then returns the getTasks function
     sendTasks(){
         Axios.post("todo", {task: this.state.inputTask}).then(() => {
+            console.log('a response from sendTasks')
             this.setState({inputTask: ""})
             return this.getTasks();
         });
@@ -45,7 +46,7 @@ export default class App extends React.Component {
         <div>
             <h1>Taskly</h1>
             <input value={this.state.inputTask} onChange={this.taskInput}></input>
-            <button onClick={this.sendTask}>add a task</button>
+            <button onClick={this.sendTask}>click here to add a task</button>
         </div>
         )
     }
