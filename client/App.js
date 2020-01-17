@@ -21,12 +21,12 @@ export default class App extends React.Component {
 
     // getTasks is getting the tasks from 'todo' then is setting the state to the tasks that it got
     getTasks(){
-        Axios.get("todo").then(tasks => this.setState({tasks: tasks.data}));
+        Axios.get("/todos").then(tasks => this.setState({tasks: tasks.data}));
     }
 
     // sendTasks posts to 'todo' from state of inputTask then sets the state of inputTask to empty "". then returns the getTasks function
     sendTasks(){
-        Axios.post("todo", {task: this.state.inputTask}).then(() => {
+        Axios.post("/todo", {task: this.state.inputTask}).then(() => {
             console.log('a response from sendTasks')
             this.setState({inputTask: ""})
             return this.getTasks();
