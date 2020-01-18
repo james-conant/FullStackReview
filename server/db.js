@@ -22,7 +22,16 @@ connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
 // create tasks
 
 // add task
+const addTask = (task, callback) => {
+  connection.query(
+    `INSERT INTO tasks (task) VALUES ("${task}")`,
+    (err, data) => {
+      if (err) throw err;
+      else callback(null, data);
+    }
+  )
+}
 
 // get tasks
 
-// module.exports = {addTask, getTasks};
+module.exports = {addTask};
