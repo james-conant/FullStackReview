@@ -11,6 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 // get 
+// TODO: add in database function to get array of all todos and res.send the results
 app.get('/todos', (req, res) => {
     console.log('tryin to get a task')
     db.getTasks((err, data) => {
@@ -23,6 +24,7 @@ app.get('/todos', (req, res) => {
 })
 
 // post
+// TODO: add in database function to add single to do to the table
 app.post("/todo", (req, res) => {
     var task = req.body.task
     console.log(task)
@@ -35,6 +37,21 @@ app.post("/todo", (req, res) => {
         }
     })
 })
+// delete
+// TODO: add in database function to remove a single to do item from the table
+app.delete("/todo/:id", (req, res) => {
+    const id = req.params.id;
+    console.log("id from server", id);
+    db.deleteTask(id, (err, data) => {
+      if (err) {
+        console.error(err);
+      } else {
+        res.send(data);
+      }
+    });
+  });
+  
+
 
 // listen
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

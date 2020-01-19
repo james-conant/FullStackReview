@@ -29,13 +29,22 @@ export default class App extends React.Component {
         //     console.log('a response from sendTask')
         //     return this.getTasks();
         // });
-        event.preventDefault();
+        // event.preventDefault();
         this.setState({tasks: [...this.state.tasks, this.state.inputTask]});
+        // everything in tasks and inputTasks goes into tasks
         console.log(this.state.inputTask)
         Axios.post("/todo", {task: this.state.inputTask}).then(() => {
             this.setState({inputTask: ""})
         }).catch(err => {console.log(err)});
     }
+
+    deleteTask(event) {
+        const id = event.target.value;
+        console.log("id from client", id);
+        Axios.delete(`/todo/${id}`).then(() => {
+          return this.getTasks();
+        });
+      }
 
     // taskInput helps set the state of what goes into the text box (could probably just do it in render)
     taskInput(event) {
@@ -51,11 +60,11 @@ export default class App extends React.Component {
             <input value={this.state.inputTask} onChange={this.taskInput}/>
             <button onClick={this.sendTask}>click here to add a task</button>
             {this.state.tasks.map(task => {
-                <Task id={task.id} task={task.task} />
+                return (
+                <Task id={task.id} task={task} deleteTask={this.deleteTask}/>
+                );
             })}
         </div>
         );
     }
-
-
 } 
